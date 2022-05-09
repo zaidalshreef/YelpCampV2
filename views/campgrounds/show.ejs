@@ -60,20 +60,20 @@
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>
     <h3>Reviews</h3>
-    <% campground.reviews.forEach(review => { %>
+    <% for (let i = campground.reviews.length - 1; i >= 0; i--) { %>
     <div class="card mb-2">
       <div class="card-body">
         <h6 class="card-subtitle mb-2 text-muted">
-          Rating : <%= review.rating %>
+          Rating : <%= campground.reviews[i].rating %>
         </h6>
-        <p class="card-text"><%= review.body %></p>
-        <form action="/campgrounds/<%= campground._id %>/reviews/<%= review._id %>?_method=DELETE" method="POST">
+        <p class="card-text"><%= campground.reviews[i].body %></p>
+        <form action="/campgrounds/<%= campground._id %>/reviews/<%= campground.reviews[i]._id %>?_method=DELETE" method="POST">
           <input class="btn btn-danger" type="submit" value="delete" />
         </form>
       </div>
     </div>
 
-    <% }); %>
+    <% } %>
 
   </div>
 </div>
