@@ -18,7 +18,10 @@
     "joi": "^17.6.0",
     "method-override": "^3.0.0",
     "minimatch": "^5.0.1",
-    "mongoose": "^6.3.0",
-    "nodemon": "^2.0.15"
+    "mongoose": "^6.3.3",
+    "nodemon": "^2.0.15",
+    "passport": "^0.5.2",
+    "passport-local": "^1.0.0",
+    "passport-local-mongoose": "^7.0.0"
   }
 }

@@ -19,6 +19,7 @@ const seeded = async () => {
     for (let i = 0; i < 50; i++) {
         const city = cities[Math.floor(Math.random() * cities.length)];
         const camp = new Campground({
+            author: '627a351c315017d5ec3dad34',
             title: descriptors[Math.floor(Math.random() * descriptors.length)] + ' ' + places[Math.floor(Math.random() * places.length)],
             location: `${city.city}, ${city.state}`,
             image: `https://source.unsplash.com/random/?${city.city},${city.state}`,
