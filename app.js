@@ -13,9 +13,7 @@ const passport = require("passport");
 const localStrategy = require("passport-local");
 const User = require("./models/user");
 
-
-
-// connect to the database 
+// connect to the database
 mongoose.connect("mongodb://localhost:27017/yelp_camp", {
   useNewUrlParser: true,
 });
@@ -26,20 +24,16 @@ db.once("open", function () {
   console.log("connected");
 });
 
-
-
-// create express app 
+// create express app
 const app = express();
 const port = 3000;
 
-
-// set view engine to ejs 
+// set view engine to ejs
 app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
 app.set("views", join(__dirname, "./views"));
 
-
-// use middleware urlencoded and method override 
+// use middleware urlencoded and method override
 app.use(
   express.urlencoded({
     extended: true,
@@ -50,7 +44,7 @@ app.use(methodoverride("_method"));
 // use middleware for static files
 app.use(express.static(join(__dirname, "public")));
 
-// use middleware for session and flash 
+// use middleware for session and flash
 app.use(
   session({
     secret: "secret",
@@ -63,51 +57,42 @@ app.use(
 );
 app.use(flash());
 
-
-
-
-// use middleware for passport 
+// use middleware for passport
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new localStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-
-
-
-
-
-// middleware  for locals 
+// middleware  for locals
 app.use((req, res, next) => {
-  res.locals.currentUser = req.user;  
+  if (
+    req.originalUrl !== "/login" &&
+    req.originalUrl !== "/register" &&
+    req.originalUrl !== "/logout"
+  ) {
+    req.session.returnTo = req.originalUrl;
+  }
+  res.locals.currentUser = req.user;
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
   next();
 });
 
-
-
-
-
 // routes for the app (in order of priority)
-app.use("/", users)
+app.use("/", users);
 app.use("/campgrounds", campgrounds);
 app.use("/campgrounds/:id/reviews", reviews);
 
-
 // home page routes
 app.get("/", (req, res) => res.render("home"));
-
 
 // ------------------------------------------------- //
 app.all("*", (req, res, next) => {
   next(new expressError("Page not found", 404));
 });
 
-
-
-// error handling middleware 
+// error handling middleware
 app.use((err, req, res, next) => {
   const { status = "500" } = err;
   if (!err.message) err.message = "Something went wrong";
@@ -115,12 +100,6 @@ app.use((err, req, res, next) => {
     err,
   });
 });
-
-
-
-
-
-
 
 // ------------------------------------------------- //
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
