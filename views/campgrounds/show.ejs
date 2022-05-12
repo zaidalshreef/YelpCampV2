@@ -1,18 +1,40 @@
 <% layout('layouts/boilerplate'); %>
 
-<link rel="stylesheet" href="/styles/stars.css">
+<link rel="stylesheet" href="/styles/stars.css" />
 
 <div class="row">
   <div class="col-6">
+    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <% campground.images.forEach((img,i) => {%>
+        <div class="carousel-item <%= i=== 0 ? 'active': '' %> ">
+          <img src="<%= img.url %>" class="d-block w-100" alt="..." />
+        </div>
+        <% }); %>
+      </div>
+      <% if(campground.images.length>1){ %> 
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+        data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+        data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+      <% } %>
+    </div>
     <div class="card mb-2">
-      <img src="<%= campground.image %>" class="card-img-top" alt="..." />
       <div class="card-body">
         <h5 class="card-title"><%= campground.title %></h5>
         <p class="card-text"><%= campground.description %></p>
       </div>
       <ul class="list-group list-group-flush">
         <li class="list-group-item text-muted"><%= campground.location %></li>
-        <li class="list-group-item text-muted">created by <%= campground.author.username %></li>
+        <li class="list-group-item text-muted">
+          created by <%= campground.author.username %>
+        </li>
         <li class="list-group-item">$<%= campground.price %>/night</li>
       </ul>
       <% if(currentUser && campground.author.equals(currentUser._id)) {%>
@@ -29,7 +51,6 @@
     <% if(currentUser){ %>
     <h3>leave a Review</h3>
     <form class="mb-3 needs-validation" action="/campgrounds/<%= campground._id %>/reviews" method="POST" novalidate>
-
       <fieldset class="starability-basic mt-4">
         <input type="radio" id="no-rate" class="input-no-rate" name="Review[rating]" value="0" checked
           aria-label="No rating." />
@@ -58,13 +79,16 @@
         <p class="starability-result" data-rating="<%= campground.reviews[i].rating %>">
           Rated: <%= campground.reviews[i].rating %> stars
         </p>
-        <hr>
+        <hr />
         <p class="card-text"><%= campground.reviews[i].body %></p>
-        <footer class="blockquote-footer m-0"> created by <cite
-            title="Source Title"><%= campground.reviews[i].author.username %></cite></footer>
-        <% if(currentUser && campground.reviews[i].author.equals(currentUser._id)){%>
-        <hr>
-          <form action="/campgrounds/<%= campground._id %>/reviews/<%= campground.reviews[i]._id %>?_method=DELETE"
+        <footer class="blockquote-footer m-0">
+          created by
+          <cite title="Source Title"><%= campground.reviews[i].author.username %></cite>
+        </footer>
+        <% if(currentUser &&
+        campground.reviews[i].author.equals(currentUser._id)){%>
+        <hr />
+        <form action="/campgrounds/<%= campground._id %>/reviews/<%= campground.reviews[i]._id %>?_method=DELETE"
           method="POST">
           <input class="btn btn-danger" type="submit" value="delete" />
         </form>
@@ -72,8 +96,6 @@
       </div>
     </div>
 
-    <% } %>
-    <% } %>
-
+    <% } %> <% } %>
   </div>
 </div>

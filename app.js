@@ -1,3 +1,7 @@
+if(process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
+
 const express = require("express");
 const { join } = require("path");
 const mongoose = require("mongoose");
@@ -12,6 +16,13 @@ const users = require("./routes/users");
 const passport = require("passport");
 const localStrategy = require("passport-local");
 const User = require("./models/user");
+
+
+
+
+
+
+
 
 // connect to the database
 mongoose.connect("mongodb://localhost:27017/yelp_camp", {
