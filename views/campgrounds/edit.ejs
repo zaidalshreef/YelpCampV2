@@ -44,14 +44,14 @@
                     <% campground.images.forEach(function(image,i){ %>
                     <div class="col-lg-3 col-md-6">
                             <input type="checkbox" id="image-<%=i%>" name="deleteImages[]"  value ="<%= image.filename %>" >
-                            <label for="image-<%=i%>">
-                                <img src="<%= image.thumbnail %>" alt="#" class="">
+                            <label id="image-checkbox" for="image-<%=i%>">
+                                <img src="<%= image.url %>" alt="#" class="">
                             </label>
                         </div>
                         <% }) %>
                     </div>
                 </div>
-                <div class="d-grid gap-2 ms-4 d-md-flex justify-content-md-center ">
+                <div class="d-grid gap-2 ms-4 ">
                     <input class="btn btn-success mb-3" type="submit" value="update campground">
                 </div>       
                 </form>

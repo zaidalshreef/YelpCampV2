@@ -1,18 +1,11 @@
 
 
-  ul {
-    list-style-type: none;
-  }
-  
-  li {
-    display: inline-block;
-  }
   
   input[type="checkbox"][id^="image"] {
     display: none;
   }
   
-  label {
+  #image-checkbox {
     padding: 10px;
     display: block;
     position: relative;
@@ -26,7 +19,7 @@
     user-select: none;
   }
   
-  label::before {
+  #image-checkbox::before {
     background-color: white;
     color: white;
     content: " ";
@@ -43,19 +36,19 @@
     transition-duration: 0.4s;
     transform: scale(0);
   }
-  label img {
+  #image-checkbox img {
     height: 150px;
     width: 150px;
     transition-duration: 0.2s;
     transform-origin: 50% 50%;
   }
   
-  :checked+label {
+  :checked+#image-checkbox {
     border-color: #ddd;
   }
 
   
-  :checked+label img {
+  :checked+#image-checkbox img {
     transform: scale(0.9);
     box-shadow: 0 0 8px rgb(255, 0, 0);
     z-index: -1;
