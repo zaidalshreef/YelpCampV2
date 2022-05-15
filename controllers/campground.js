@@ -6,7 +6,7 @@ const Geocoding = mbxGeocoding({ accessToken: MY_ACCESS_TOKEN });
 
 module.exports.index = async (req, res, next) => {
   const options = {
-    page: req.query.page || 1,
+    page: parseInt(req.query.page) || 1,
     limit: 10,
   };
   const allcampgrounds = await Campground.find({})
@@ -15,6 +15,10 @@ module.exports.index = async (req, res, next) => {
     options,
     function (err, result) {
       const campgrounds = result
+      if(options.page > result.totalPages) {
+        req.flash("error", "Page not found");
+        return res.redirect("/campgrounds");
+      }
       const afterNextPage = result.nextPage + 1
       res.render("campgrounds/index", { campgrounds,allcampgrounds,afterNextPage });;
     }
