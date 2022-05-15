@@ -41,7 +41,6 @@ db.once("open", function () {
 
 // create express app
 const app = express();
-const port = 3000;
 
 // set view engine to ejs
 app.engine("ejs", ejsMate);
@@ -141,4 +140,6 @@ app.use((err, req, res, next) => {
 });
 
 // ------------------------------------------------- //
+
+const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
