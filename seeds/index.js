@@ -1,10 +1,16 @@
+if(process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
+
 const mongoose = require("mongoose");
 const cities = require("./cities");
 const { descriptors, places } = require("./seedHelpers");
 const Campground = require("../models/campground");
 
+const dburl = `mongodb+srv://zaid:${process.env.password}@cluster0.kjvti.mongodb.net/Cluster0?retryWrites=true&w=majority`
+
 // Create the Express application and set the port number.
-mongoose.connect("mongodb://localhost:27017/yelp_camp", {
+mongoose.connect(dburl, {
   useNewUrlParser: true,
 });
 
