@@ -26,7 +26,7 @@ const MongoStore = require('connect-mongo');
 
 
 
-const dburl = "mongodb://localhost:27017/yelp_camp"
+const dburl = `mongodb+srv://zaid:${process.env.password}@cluster0.kjvti.mongodb.net/Cluster0?retryWrites=true&w=majority`
 
 // connect to the database
 mongoose.connect(dburl, {
