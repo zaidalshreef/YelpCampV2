@@ -1,19 +1,27 @@
 <% layout('layouts/boilerplate') %>
+<div class="container d-flex justify-content-center align-items-center mt-5">
+    <div class="card col-md-6">
+        <div class="card-header mb-3">
+            <h3>Register</h3>
+        </div>
+        <div class="card-body ">
+            <form action="/register" method="post">
+                <div class="form-group mb-3">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" id="name" name="username" placeholder="Name" autofocus>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                </div>
+                
+                <button type="submit" class="btn btn-primary ">Register</button>
+            </form>
+        </div>
+    </div>
 
-<h1>Register</h1>
-    <form class="needs-validation" action="/register" method="POST" novalidate>
-        <div class="mb-3">
-            <label class="form-label" for="username"> Username </label>
-            <input class="form-control" id="username" type="text" name="username" required />
-        </div>
-        <div class="mb-3">
-            <label class="form-label" for="email">Email</label>
-            <input class="form-control" id="email" type="email" name="email" 
-                required />
-        </div>
-        <div class="mb-3">
-            <label class="form-label" for="password">Password</label>
-            <input class="form-control" id="password" type="password" name="password"  required />
-        </div>
-        <input class="btn btn-success" type="submit" value="Sign up" />
-</form>
+</div>

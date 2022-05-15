@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const mongoosePaginate = require("mongoose-paginate-v2");
 const Review = require("./review");
 const Schema = mongoose.Schema;
 
@@ -13,10 +14,12 @@ imagesSchema.virtual('thumbnail').get(function () {
 }
 );
 
+const opts = { toJSON: { virtuals: true } };
+
 const campgroundSchema = new Schema({
   title: String,
   images: [imagesSchema],
-  Geolocation: {
+  geometry: {
     type: {
       type: String,
       enum: ['Point'],
@@ -40,9 +43,26 @@ const campgroundSchema = new Schema({
       ref: "Review",
     },
   ],
-});
+}, opts);
 
-campgroundSchema.post("findOneAndDelete", async function (campground) {
+
+campgroundSchema.plugin(mongoosePaginate);
+
+campgroundSchema.virtual('properties.popupMarkup')
+.get(function (){
+  return `
+  <h5>${this.title}</h5>
+  <hr>
+  <p>${this.description.substring(0, 55)}...</p>
+  <p>${this.location}</p>
+  <p> Price: ${this.price}</p>
+  <a href="/campgrounds/${this.id}">More info</a>
+  `;
+}
+)
+
+
+  campgroundSchema.post("findOneAndDelete", async function (campground) {
   await Review.deleteMany({
     _id: {
       $in: campground.reviews,

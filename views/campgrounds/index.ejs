@@ -1,11 +1,15 @@
 <% layout('layouts/boilerplate'); %>
 
-<H1>All Campgrounds</H1>
+<div id="map" style="width: 100%; height: 500px;"></div>
+
+
 
 <div class = "container text-center my-2">
-  <a class="btn btn-success btn-sm" href="campgrounds/new"><h2>add new Campground</h2></a>
+  <div class="d-grid gap-2 d-md-block mx-auto">
+  <a class="btn btn-outline-secondary shadow my-5 rounded" href="campgrounds/new"><h2>Create New Campground</h2></a>
+  </div>
 </div>
-<% campgrounds.forEach(function(campground) { %>
+<% campgrounds.docs.forEach(function(campground) { %>
 <div class="card mb-3">
   <div class="row g-0">
     <div class="col-md-4">
@@ -41,3 +45,26 @@
 </div>
 
 <% }); %>
+
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+    <li class="page-item">
+      <a class="page-link" href="campgrounds?page=<%=campgrounds.prevPage%>" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <li class="page-item"><a class="page-link" href="campgrounds?page=<%=campgrounds.page%>"><%=campgrounds.page%></a></li>
+    <li class="page-item"><a class="page-link" href="campgrounds?page=<%=campgrounds.nextPage%>"><%=campgrounds.nextPage%></a></li>
+    <li class="page-item">
+      <a class="page-link" href="campgrounds?page=<%=afterNextPage%>" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<script>
+  const campgrounds = { features: <%-JSON.stringify(allcampgrounds) %>};
+  </script>
+
+<script src="/js/cluster.js"></script>
